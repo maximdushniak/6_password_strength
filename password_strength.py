@@ -16,6 +16,7 @@ def contain_numeric(password):
 def contain_special(password):
     return re.search(r'.*[~!@#$%^&*()_+\-=\{\}\[\]:;\`<>\.\/\\]+.*', password)
 
+
 def get_password_strength(password):
     # password = 'sdjfiksjdfFDSAFfdsa3424323'
     password_strength = 1
