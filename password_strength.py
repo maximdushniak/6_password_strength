@@ -1,5 +1,6 @@
 import re
 import os
+import getpass
 
 
 def contain_lower(password):
@@ -30,13 +31,12 @@ def contain_date(password):
             return True
 
 
-def check_blacklist(password, filepath='blacklist.txt'):
-    if not os.path.exists(filepath):
-        return True
-    with open(filepath, 'r', encoding='utf-8') as blacklist:
-        for badpass in blacklist:
-            if badpass in password:
-                return True
+def check_blacklist(password, blacklist):
+    if blacklist is None:
+        return False
+    for bad_pass in blacklist:
+        if bad_pass == password:
+            return True
     return False
 
 
@@ -65,13 +65,22 @@ def get_password_strength(password):
     if not contain_date(password):
         password_strength += 1
 
-    if not check_blacklist(password):
+    if os.path.exists('blacklist.txt'):
+        try:
+            blacklist = open('blacklist.txt', 'r', encoding='utf-8')
+        except:
+            blacklist = None
+
+    if not check_blacklist(password, blacklist):
         password_strength += 2
+
+    if blacklist is not None:
+        blacklist.close()
 
     return password_strength
 
 
 if __name__ == '__main__':
 
-    password = input('Введите пароль: ')
+    password = getpass.getpass('Введите пароль: ')
     print('Сложность Вашего пароля: ', get_password_strength(password))
