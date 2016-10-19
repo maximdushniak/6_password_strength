@@ -82,4 +82,5 @@ def get_password_strength(password):
 
 if __name__ == '__main__':
 
+    password = getpass.getpass('Введите пароль для проверки: ')
     print('Сложность Вашего пароля: ', get_password_strength(password))
