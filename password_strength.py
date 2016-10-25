@@ -65,11 +65,12 @@ def get_password_strength(password):
     if not contain_date(password):
         password_strength += 1
 
+    blacklist = None
     if os.path.exists('blacklist.txt'):
         try:
             blacklist = open('blacklist.txt', 'r', encoding='utf-8')
         except:
-            blacklist = None
+            pass
 
     if not check_blacklist(password, blacklist):
         password_strength += 2
